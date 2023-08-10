@@ -4,8 +4,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import vn.backend.ksv.repository.sources.IAccountAdminRepo;
-import vn.backend.ksv.repository.sources.impl.AccountAdminRepoImpl;
+import vn.backend.ksv.repository.sources.IUserRepo;
+import vn.backend.ksv.repository.sources.impl.UserRepoImpl;
 
 /**
  * Creator: Nguyen Quang Hung
@@ -19,6 +19,6 @@ public class RepositoryModule extends AbstractModule {
     @Override
     protected void configure() {
         LOGGER.info("RepositoryModule configure");
-        bind(IAccountAdminRepo.class).to(AccountAdminRepoImpl.class).in(Scopes.SINGLETON);
+        bind(IUserRepo.class).to(UserRepoImpl.class).in(Scopes.SINGLETON);
     }
 }

@@ -11,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vn.backend.ksv.common.Configuration;
 import vn.backend.ksv.common.auth.IJwtAuth;
+import vn.backend.ksv.common.auth.IJwtProvider;
 import vn.backend.ksv.common.auth.JwtAuth;
+import vn.backend.ksv.common.auth.JwtProvider;
 import vn.backend.ksv.common.auth.multisession.IJwtAuthNonCache;
 import vn.backend.ksv.common.auth.multisession.JwtAuthNonCache;
 import vn.backend.ksv.common.constant.staticEnum.StaticEnum;
@@ -75,5 +77,6 @@ public class AuthModule extends AbstractModule {
         LOGGER.info("Start binding jwt auth");
         bind(IJwtAuthNonCache.class).to(JwtAuthNonCache.class).in(Scopes.SINGLETON);
         bind(IJwtAuth.class).to(JwtAuth.class).in(Scopes.SINGLETON);
+        bind(IJwtProvider.class).to(JwtProvider.class).in(Scopes.SINGLETON);
     }
 }

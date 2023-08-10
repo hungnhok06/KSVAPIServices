@@ -9,6 +9,7 @@ import io.vertx.ext.web.Router;
 import lombok.RequiredArgsConstructor;
 import vn.backend.ksv.common.LogAdapter;
 import vn.backend.ksv.common.constant.key.ConfigAPI;
+import vn.backend.ksv.common.module.pattern.INonAuthRouterHandler;
 import vn.backend.ksv.common.module.pattern.IRouterHandler;
 import vn.backend.ksv.config.Config;
 import vn.backend.ksv.consumer.IConsumer;
@@ -30,19 +31,22 @@ public class ConsumerImpl implements IConsumer {
     private final Config config;
     private final IAuthServices authServices;
     private final IRouterHandler routerHandler;
+    private final INonAuthRouterHandler nonAuthRouterHandler;
 
     @Inject
     ConsumerImpl(Vertx vertx,
                  Config config,
                  Gson gson,
                  IAuthServices authServices,
-                 IRouterHandler routerHandler){
+                 IRouterHandler routerHandler,
+                 INonAuthRouterHandler nonAuthRouterHandler){
 
         this.vertx = vertx;
         this.config = config;
         this.gson = gson;
         this.authServices = authServices;
         this.routerHandler = routerHandler;
+        this.nonAuthRouterHandler = nonAuthRouterHandler;
     }
 
 
@@ -71,15 +75,17 @@ public class ConsumerImpl implements IConsumer {
 
     @Override
     public IConsumer initKSVAccountRoot() {
-        return null;
+        LOGGER.info("Init Account admin ksv");
+        authServices.initKSVAccountRoot();
+        return this;
     }
 
 
     private void apiKyc(Router router) {
         router.post(ConfigAPI.Admin.getLogin())
-                .handler(routerHandler::postHandler)
-                .blockingHandler(routerHandler::internalUserHandler)
-                .blockingHandler(ctx -> routerHandler.serviceHandler(ctx, authServices::adminLogin), false)
-                .blockingHandler(routerHandler::successHandler).failureHandler(routerHandler::errorHandler);
+                .handler(nonAuthRouterHandler::postHandler)
+                .blockingHandler(nonAuthRouterHandler::internalHandler)
+                .blockingHandler(ctx -> nonAuthRouterHandler.serviceHandler(ctx, authServices::adminLogin), false)
+                .blockingHandler(nonAuthRouterHandler::successHandler).failureHandler(nonAuthRouterHandler::errorHandler);
     }
 }

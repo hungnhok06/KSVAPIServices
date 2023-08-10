@@ -1,4 +1,4 @@
-package vn.backend.ksv.common.request;
+package vn.backend.ksv.common.request.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

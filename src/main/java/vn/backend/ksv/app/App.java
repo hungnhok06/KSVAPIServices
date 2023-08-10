@@ -26,7 +26,7 @@ public class App extends AbstractVerticle {
             injector = Guice.createInjector(new ModuleConfig(context));
             IConsumer consumer = injector.getInstance(ConsumerImpl.class);
             consumer
-//                    .initKSVAccountRoot()
+                    .initKSVAccountRoot()
                     .usingRestful();
         } else {
             LOGGER.error("Not found config file");

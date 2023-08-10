@@ -7,8 +7,6 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.vertx.core.Context;
@@ -16,16 +14,12 @@ import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jooq.SQLDialect;
 import vn.backend.ksv.common.Configuration;
 import vn.backend.ksv.common.constant.staticEnum.StaticEnum;
 import vn.backend.ksv.config.module.*;
 
-import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -102,7 +96,13 @@ public class ModuleConfig  extends AbstractModule {
                 .build();
     }
 
-
+    @Provides
+    @Singleton
+    public PrivateKey getPrivateKey() throws Exception {
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(Configuration.decodeByteFile(getConfig().getTokenConfig().getRsaPrivateFile()));
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        return kf.generatePrivate(spec);
+    }
     @Override
     protected void configure() {
         install(new AuthModule(this.vertx, this.config.getTokenConfig()));

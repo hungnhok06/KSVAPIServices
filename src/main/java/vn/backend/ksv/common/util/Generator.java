@@ -554,4 +554,12 @@ public class Generator {
             throw new RuntimeException(ex);
         }
     }
+
+    public static String generateUserIdAdmin(int count){
+        LOGGER.info("Generate userId");
+        final String userId = String.format("AD%09d", count + 1);
+        LOGGER.debug("Generated userId: {}", userId);
+        return userId;
+    }
+
 }

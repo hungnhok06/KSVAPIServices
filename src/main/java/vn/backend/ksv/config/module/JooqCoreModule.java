@@ -67,53 +67,25 @@ public class JooqCoreModule extends AbstractModule {
      *
      * @param config
      */
-//    public static HikariDataSource createConnection(DbConfig config) {
-//        LOGGER.info("Start sql connection");
-//
-//        Configuration.checkValidation(config);
-//
-//        HikariConfig hikariConfig = new HikariConfig();
-//        hikariConfig.setDataSourceClassName(config.getDataSourceClassName());
-//        hikariConfig.setUsername(config.getUsername());
-//        hikariConfig.setPassword(config.getPassword());
-//        hikariConfig.addDataSourceProperty("serverName", config.getHost());
-//        hikariConfig.addDataSourceProperty("port", config.getPort());
-//        hikariConfig.addDataSourceProperty("databaseName", config.getDatabase());
-//        hikariConfig.addDataSourceProperty("characterEncoding", StandardCharsets.UTF_8);
-//        hikariConfig.addDataSourceProperty("useUnicode", "true");
-//        hikariConfig.setConnectionTimeout(10000);
-//        hikariConfig.addDataSourceProperty("serverTimezone", "Asia/Ho_Chi_Minh");
-//        hikariConfig.addDataSourceProperty("useLegacyDatetimeCode", "false");
-//        hikariConfig.addDataSourceProperty("autoReconnect", true);
-//        hikariConfig.setAutoCommit(true);
-//        if (config.getMaxPoolSize() != null) {
-//            hikariConfig.setMaximumPoolSize(config.getMaxPoolSize());
-//            hikariConfig.setMinimumIdle(4);
-//        } else {
-//            hikariConfig.setMaximumPoolSize(8);
-//            hikariConfig.setMinimumIdle(4);
-//        }
-//        LOGGER.info("Sql connection in successful");
-//        return new HikariDataSource(hikariConfig);
-//    }
-
-    /**
-     * initialize sql connection
-     *
-     * @param config
-     */
     public static HikariDataSource createConnection(DbConfig config) {
         LOGGER.info("Start sql connection");
 
         Configuration.checkValidation(config);
 
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setDriverClassName(config.getJdbcDriver());
-        hikariConfig.setJdbcUrl("jdbc:sqlserver://" + config.getHost() + ":" + config.getPort() + ";databaseName=" + config.getDatabase());
+        hikariConfig.setDataSourceClassName(config.getDataSourceClassName());
         hikariConfig.setUsername(config.getUsername());
         hikariConfig.setPassword(config.getPassword());
-        hikariConfig.setSchema(config.getDatabase());
-        hikariConfig.setConnectionTimeout(60000);
+        hikariConfig.addDataSourceProperty("serverName", config.getHost());
+        hikariConfig.addDataSourceProperty("port", config.getPort());
+        hikariConfig.addDataSourceProperty("databaseName", config.getDatabase());
+        hikariConfig.addDataSourceProperty("characterEncoding", StandardCharsets.UTF_8);
+        hikariConfig.addDataSourceProperty("useUnicode", "true");
+        hikariConfig.setConnectionTimeout(10000);
+        hikariConfig.addDataSourceProperty("serverTimezone", "Asia/Ho_Chi_Minh");
+        hikariConfig.addDataSourceProperty("useLegacyDatetimeCode", "false");
+        hikariConfig.addDataSourceProperty("autoReconnect", true);
+        hikariConfig.setAutoCommit(true);
         if (config.getMaxPoolSize() != null) {
             hikariConfig.setMaximumPoolSize(config.getMaxPoolSize());
             hikariConfig.setMinimumIdle(4);
@@ -124,6 +96,34 @@ public class JooqCoreModule extends AbstractModule {
         LOGGER.info("Sql connection in successful");
         return new HikariDataSource(hikariConfig);
     }
+
+    /**
+     * initialize sql connection
+     *
+     * @param config
+     */
+//    public static HikariDataSource createConnection(DbConfig config) {
+//        LOGGER.info("Start sql connection");
+//
+//        Configuration.checkValidation(config);
+//
+//        HikariConfig hikariConfig = new HikariConfig();
+//        hikariConfig.setDriverClassName(config.getJdbcDriver());
+//        hikariConfig.setJdbcUrl("jdbc:sqlserver://" + config.getHost() + ":" + config.getPort() + ";databaseName=" + config.getDatabase());
+//        hikariConfig.setUsername(config.getUsername());
+//        hikariConfig.setPassword(config.getPassword());
+//        hikariConfig.setSchema(config.getDatabase());
+//        hikariConfig.setConnectionTimeout(60000);
+//        if (config.getMaxPoolSize() != null) {
+//            hikariConfig.setMaximumPoolSize(config.getMaxPoolSize());
+//            hikariConfig.setMinimumIdle(4);
+//        } else {
+//            hikariConfig.setMaximumPoolSize(8);
+//            hikariConfig.setMinimumIdle(4);
+//        }
+//        LOGGER.info("Sql connection in successful");
+//        return new HikariDataSource(hikariConfig);
+//    }
 
     public static HikariDataSource createOracleConnection(DbConfig config) {
         LOGGER.info("Start create oracle connection");

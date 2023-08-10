@@ -4,10 +4,10 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import vn.backend.ksv.common.module.pattern.IRouterHandler;
-import vn.backend.ksv.common.module.pattern.RouterHandlerImpl;
 import vn.backend.ksv.common.util.IValidationTool;
 import vn.backend.ksv.common.util.ValidationTool;
+import vn.backend.ksv.validation.AuthValidation;
+import vn.backend.ksv.validation.IAuthValidation;
 
 /**
  * Creator: Nguyen Quang Hung
@@ -23,5 +23,6 @@ public class ValidationModule extends AbstractModule {
         LOGGER.info("ValidationModule configure");
 
         bind(IValidationTool.class).to(ValidationTool.class).in(Scopes.SINGLETON);
+        bind(IAuthValidation.class).to(AuthValidation.class).in(Scopes.SINGLETON);
     }
 }

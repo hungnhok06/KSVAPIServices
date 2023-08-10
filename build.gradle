@@ -1,3 +1,5 @@
+import static javax.xml.bind.JAXB.*
+
 group 'vn.backend.ksv'
 version '1.0'
 apply plugin: 'java'
@@ -29,15 +31,12 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'it.sauronsoftware.cron4j:cron4j:2.2.5'
-
     //Database
     implementation 'org.jooq:jooq:3.11.10'
     implementation 'org.jooq:jooq-codegen:3.11.10'
     implementation 'com.zaxxer:HikariCP:3.3.1'
     implementation 'com.microsoft.sqlserver:mssql-jdbc:7.0.0.jre8'
     implementation 'mysql:mysql-connector-java:5.1.38'
-
 
     implementation group: 'org.apache.poi', name: 'poi', version: '3.15'
 
@@ -72,6 +71,10 @@ buildscript {
         classpath 'org.jooq:jooq:3.11.10'
         classpath 'org.jooq:jooq-meta:3.11.10'
         classpath 'org.jooq:jooq-codegen:3.11.10'
+        classpath 'org.codehaus.groovy:groovy-xml:3.0.8'
+        classpath 'javax.xml.bind:jaxb-api:2.3.1'
+        classpath 'org.glassfish.jaxb:jaxb-runtime:3.0.1'
+        classpath 'com.sun.xml.bind:jaxb-impl:2.3.1'
         //Database
         classpath 'com.microsoft.sqlserver:mssql-jdbc:7.0.0.jre8'
         classpath 'mysql:mysql-connector-java:5.1.38'
@@ -92,6 +95,45 @@ shadowJar {
 
 }
 
+
+//Generate data mysql
+
+//task generate(description: 'generate database model') {
+//    def writer = new StringWriter()
+//
+//    def xml = new groovy.xml.MarkupBuilder(writer)
+//            .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.11.0.xsd') {
+//                jdbc() {
+//                    driver('org.mariadb.jdbc.Driver')
+//                    url('jdbc:mariadb://192.168.18.49:32435/')
+//                    user('root')
+//                    password('AbCd@1234')
+//                }
+//                generator() {
+//                    name 'org.jooq.codegen.JavaGenerator'
+//                    database() {
+//                        schemata() {
+//                            schema() {
+//                                inputSchema 'hung_dev'
+//                            }
+//                        }
+//                    }
+//                    generate([:]) {
+//                        fluentSetters true
+//                    }
+//                    target() {
+//                        packageName('vn.backend.ksv.repository.generator')
+//                        directory('../KSVAPIServices/src/main/java')
+//                    }
+//                }
+//            }
+//    org.jooq.codegen.GenerationTool.generate(
+//            javax.xml.bind.JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.meta.jaxb.Configuration.class)
+//    )
+//}
+
+
+//Generate data sql server
 //
 //task generate(description: 'generate database model') {
 //    def writer = new StringWriter()

@@ -3,7 +3,7 @@ package vn.backend.ksv.repository.base;
 import org.jooq.*;
 import vn.backend.ksv.common.exception.DataException;
 import vn.backend.ksv.common.reponse.QueryResponse;
-import vn.backend.ksv.common.request.QueryRequest;
+import vn.backend.ksv.common.request.common.QueryRequest;
 
 import java.util.Collection;
 import java.util.List;

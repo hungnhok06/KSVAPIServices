@@ -6,30 +6,30 @@
   "workerPoolSize": 16,
   "workerMaxExecuteTime": 5000,
 
-//  "dbConfig": {
-//    "dataSourceClassName": "com.mysql.jdbc.jdbc2.optional.MysqlDataSource",
-//    "jdbcDriver": "",
-//    "host": "192.168.18.49",
-//    "port": "32435",
-//    "maxPoolSize": "16",
-//    "username": "root",
-//    "password": "AbCd@1234",
-//    "database": "hung_dev",
-//    "debugInfoOnStackTrace": false,
-//    "executeLogging": false
-//  },
   "dbConfig": {
-    "jdbcDriver": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
-    "dataSourceClassName": "",
+    "dataSourceClassName": "com.mysql.jdbc.jdbc2.optional.MysqlDataSource",
+    "jdbcDriver": "",
     "host": "192.168.18.49",
-    "port": "30562",
-    "maxPoolSize": 16,
-    "username": "sa",
+    "port": "32435",
+    "maxPoolSize": "16",
+    "username": "root",
     "password": "AbCd@1234",
-    "database": "evn",
+    "database": "hung_dev",
     "debugInfoOnStackTrace": false,
     "executeLogging": false
   },
+//  "dbConfig": {
+//    "jdbcDriver": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+//    "dataSourceClassName": "",
+//    "host": "192.168.18.49",
+//    "port": "30562",
+//    "maxPoolSize": 16,
+//    "username": "sa",
+//    "password": "AbCd@1234",
+//    "database": "evn",
+//    "debugInfoOnStackTrace": false,
+//    "executeLogging": false
+//  },
   "tokenConfig": {
     "rsaPrivateFile": "build/resources/main/private_key.rsa",
     "rsaPublicFile": "build/resources/main/public_key.rsa",
