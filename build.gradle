@@ -1,0 +1,134 @@
+group 'vn.backend.ksv'
+version '1.0'
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+
+
+dependencies {
+    implementation 'io.vertx:vertx-core:3.9.2'
+    implementation 'io.vertx:vertx-web:3.9.2'
+    implementation 'io.vertx:vertx-web-client:3.9.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.inject:guice:4.2.2'
+    implementation 'io.vertx:vertx-redis-client:3.9.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+    implementation 'joda-time:joda-time:2.10.1'
+    implementation 'io.vertx:vertx-mail-client:3.9.2'
+    implementation 'org.apache.poi:poi-ooxml:3.17'
+
+    implementation 'org.apache.logging.log4j:log4j-core:2.8.2'
+    implementation 'org.apache.logging.log4j:log4j-api:2.8.2'
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.8.2'
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'it.sauronsoftware.cron4j:cron4j:2.2.5'
+
+    //Database
+    implementation 'org.jooq:jooq:3.11.10'
+    implementation 'org.jooq:jooq-codegen:3.11.10'
+    implementation 'com.zaxxer:HikariCP:3.3.1'
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:7.0.0.jre8'
+    implementation 'mysql:mysql-connector-java:5.1.38'
+
+
+    implementation group: 'org.apache.poi', name: 'poi', version: '3.15'
+
+    implementation 'io.vertx:vertx-rabbitmq-client:3.9.4'
+
+    implementation group: 'com.lowagie', name: 'itext', version: '2.1.7'
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.10.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.10.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.10.5'
+    implementation group: 'javax.mail', name: 'mail', version: '1.4'
+    implementation 'it.sauronsoftware.cron4j:cron4j:2.2.5'
+    implementation 'io.vertx:vertx-rabbitmq-client:3.9.4'
+
+    implementation 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor('org.projectlombok:lombok:1.18.24')
+
+    implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+}
+
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.3'
+        classpath 'org.jooq:jooq:3.11.10'
+        classpath 'org.jooq:jooq-meta:3.11.10'
+        classpath 'org.jooq:jooq-codegen:3.11.10'
+        //Database
+        classpath 'com.microsoft.sqlserver:mssql-jdbc:7.0.0.jre8'
+        classpath 'mysql:mysql-connector-java:5.1.38'
+        classpath 'org.mariadb.jdbc:mariadb-java-client:2.4.1'
+    }
+}
+
+shadowJar {
+    classifier = null
+    version = version
+    manifest {
+        attributes 'Main-Class': 'io.vertx.core.Starter'
+        attributes 'Main-Verticle': 'vn.backend.ksv.app.App'
+    }
+    mergeServiceFiles {
+        include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
+    }
+
+}
+
+//
+//task generate(description: 'generate database model') {
+//    def writer = new StringWriter()
+//
+//    def xml = new groovy.xml.MarkupBuilder(writer)
+//            .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.14.0.xsd') {
+//                jdbc() {
+//                    driver('com.microsoft.sqlserver.jdbc.SQLServerDriver')
+//                    url('jdbc:sqlserver://192.168.18.49:30562;databaseName=evn')
+//                    user('sa')
+//                    password('AbCd@1234')
+//                }
+//                generator() {
+//                    name 'org.jooq.codegen.JavaGenerator'
+////            strategy() {
+////                name ('vn.intelin.ifds.common.adapter.CustomGeneratorStrategy')
+////            }
+//                    database() {
+////                name('org.jooq.meta.mariadb.MariaDBDatabase')
+////                inputSchema('cif')
+//                        inputCatalog 'evn'
+//                        schemata() {
+//                            schema() {
+//                                inputSchema 'dbo'
+//                            }
+//                        }
+//                    }
+//                    generate([:]) {
+//                        fluentSetters true
+//                    }
+//                    target() {
+//                        packageName('vn.backend.ksv.common.generate')
+//                        directory('../KSVAPIServices/src/main/java')
+//                    }
+//                }
+//            }
+//    org.jooq.codegen.GenerationTool.generate(
+//            javax.xml.bind.JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.meta.jaxb.Configuration.class)
+//    )
+//}
